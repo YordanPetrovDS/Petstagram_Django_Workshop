@@ -40,7 +40,7 @@ class Profile(models.Model):
         blank=True,
     )
 
-    date_of_birth = models.DateTimeField(
+    date_of_birth = models.DateField(
         null=True,
         blank=True,
     )
@@ -60,7 +60,12 @@ class Profile(models.Model):
         choices=GENDERS,
         null=True,
         blank=True,
+        default=DO_NOT_SHOW,
     )
+
+    @property
+    def get_full_name(self):
+        return f"{self.first_name} {self.last_name}"
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -87,7 +92,7 @@ class Pet(models.Model):
         choices=TYPES,
     )
 
-    date_of_birth = models.DateTimeField(
+    date_of_birth = models.DateField(
         null=True,
         blank=True,
     )
@@ -120,6 +125,7 @@ class Pet(models.Model):
 class PetPhoto(models.Model):
     photo = models.ImageField(
         # validators=(validate_file_max_size_in_mb(5),),
+        upload_to="images"
     )
     tagged_pets = models.ManyToManyField(
         Pet,

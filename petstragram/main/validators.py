@@ -1,4 +1,5 @@
 from django.core.exceptions import ValidationError
+from django.utils.deconstruct import deconstructible
 
 
 def validate_only_letters(value: str):
@@ -19,3 +20,12 @@ def validate_file_max_size_in_mb(max_size):
             raise ValidationError(f"Max file size is {max_size} MB.")
 
     return validate
+
+
+@deconstructible
+class ValidateFileMaxSizeInMb:
+    def __init__(self, max_size):
+        self.max_size = max_size
+
+    def __call__(self, value):
+        pass
