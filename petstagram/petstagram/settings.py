@@ -4,11 +4,15 @@ from pathlib import Path
 from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = os.getenv("JWT_KEY", "sk")
-DEBUG = os.getenv("DEBUG", "False") == "True"
+# SECRET_KEY = os.getenv("JWT_KEY", "sk")
+# DEBUG = os.getenv("DEBUG", "False") == "True"
+
+SECRET_KEY = "dsadasf2143235"
+DEBUG = True
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
+    "petstagram-2022.herokuapp.com",
 ]
 
 # ALLOWED_HOSTS = os.getenv("DB_HOST", "").split(" ")
