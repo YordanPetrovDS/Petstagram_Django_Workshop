@@ -1,14 +1,16 @@
+import os
 from pathlib import Path
 
 from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = config("JWT_KEY")
-DEBUG = True
-ALLOWED_HOSTS = [
-    config("DB_HOST"),
-]
+SECRET_KEY = os.getenv("JWT_KEY", "sk")
+DEBUG = os.getenv("DEBUG", "False") == "True"
+# ALLOWED_HOSTS = [
+#     config("DB_HOST"),
+# ]
 
+ALLOWED_HOSTS = os.getenv("DB_HOST", "").split(" ")
 # Application definition
 
 DJANGO_APPS = (
@@ -65,11 +67,11 @@ WSGI_APPLICATION = "petstagram.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": config("DB_NAME"),
-        "USER": config("DB_USER"),
-        "PASSWORD": config("DB_PASSWORD"),
-        "HOST": config("DB_HOST"),
-        "PORT": config("DB_PORT"),
+        "HOST": os.getenv("DB_HOST", "127.0.0.1"),
+        "PORT": os.getenv("DB_PORT", "5432"),
+        "NAME": os.getenv("DB_NAME", "petstagram_db"),
+        "USER": os.getenv("DB_USER", "postgres"),
+        "PASSWORD": os.getenv("DB_PASSWORD", "1123QwER"),
     }
 }
 
