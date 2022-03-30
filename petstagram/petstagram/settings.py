@@ -64,16 +64,29 @@ WSGI_APPLICATION = "petstagram.wsgi.application"
 
 
 # Database
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "HOST": os.getenv("DB_HOST", "127.0.0.1"),
+#         "PORT": os.getenv("DB_PORT", "5432"),
+#         "NAME": os.getenv("DB_NAME", "petstagram_db"),
+#         "USER": os.getenv("DB_USER", "postgres"),
+#         "PASSWORD": os.getenv("DB_PASSWORD", "1123QwER"),
+#     }
+# }
+
+# Database
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "HOST": os.getenv("DB_HOST", "127.0.0.1"),
-        "PORT": os.getenv("DB_PORT", "5432"),
-        "NAME": os.getenv("DB_NAME", "petstagram_db"),
-        "USER": os.getenv("DB_USER", "postgres"),
-        "PASSWORD": os.getenv("DB_PASSWORD", "1123QwER"),
+        "HOST": "ec2-176-34-211-0.eu-west-1.compute.amazonaws.com",
+        "PORT": "5432",
+        "NAME": "dck4k6lub4ekh9",
+        "USER": "nrrgbjzmhbwzqe",
+        "PASSWORD": "d8cadbfaebbc86e23644e645d0d49daf796e49cb6811618c63ac54f8d2361277",
     }
 }
+
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
