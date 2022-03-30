@@ -6,11 +6,12 @@ from decouple import config
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("JWT_KEY", "sk")
 DEBUG = os.getenv("DEBUG", "False") == "True"
-# ALLOWED_HOSTS = [
-#     config("DB_HOST"),
-# ]
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+]
 
-ALLOWED_HOSTS = os.getenv("DB_HOST", "").split(" ")
+# ALLOWED_HOSTS = os.getenv("DB_HOST", "").split(" ")
 # Application definition
 
 DJANGO_APPS = (
