@@ -1,4 +1,4 @@
-{% load profiles %}
+{% comment %} {% load profiles %} {% endcomment %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -30,13 +30,13 @@
                     aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            {% has_profile as hp %}
+            {% comment %} {% has_profile as hp %} {% endcomment %}
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'index' %}">Home</a>
                     </li>
-                    {% if hp %}
+                    {% if request.user.is_authenticated %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
                         </li>
@@ -49,7 +49,7 @@
                             </li>
                         {% endif %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'profile details' %}">Profile</a>
+                            <a class="nav-link" href="{% url 'profile details' request.user.id %}">Profile</a>
                         </li>
                     {% endif %}
                 </ul>
