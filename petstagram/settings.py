@@ -11,8 +11,7 @@ SECRET_KEY = os.getenv(
     "SECRET_KEY",
     "django-insecure-t^jhlxn515i5sbhy3(e6l6c&$ex6(ct7j)5e@(nh=^1(db(&g7",
 )
-ALLOWED_HOSTS = os.getenv("DB_HOST", "127.0.0.1").split()
-print(ALLOWED_HOSTS)
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1").split()
 # Application definition
 
 DJANGO_APPS = (
