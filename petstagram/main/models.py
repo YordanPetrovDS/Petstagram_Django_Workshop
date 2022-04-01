@@ -1,13 +1,13 @@
 import datetime
 
+from cloudinary.models import CloudinaryField
+from django.contrib.auth import get_user_model
 from django.core.validators import MinLengthValidator
 from django.db import models
 from petstagram.common.validators import (
     validate_file_max_size_in_mb,
     validate_only_letters,
 )
-from django.contrib.auth import get_user_model
-
 
 UserModel = get_user_model()
 
@@ -64,14 +64,7 @@ class Pet(models.Model):
 
 
 class PetPhoto(models.Model):
-    photo = models.ImageField(
-        # validators=(validate_file_max_size_in_mb(5),),
-        upload_to="images"
-    )
-    tagged_pets = models.ManyToManyField(
-        Pet,
-        # validate at least one pet
-    )
+    photo = CloudinaryField("image")
 
     description = models.TextField(
         null=True,
@@ -84,6 +77,11 @@ class PetPhoto(models.Model):
 
     likes = models.IntegerField(
         default=0,
+    )
+
+    tagged_pets = models.ManyToManyField(
+        Pet,
+        # validate at least one pet
     )
 
     user = models.ForeignKey(

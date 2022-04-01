@@ -40,7 +40,10 @@ class Migration(migrations.Migration):
                 ("picture", models.URLField(blank=True, null=True)),
                 ("date_of_birth", models.DateField(blank=True, null=True)),
                 ("description", models.TextField(blank=True, null=True)),
-                ("email", models.EmailField(blank=True, max_length=254, null=True)),
+                (
+                    "email",
+                    models.EmailField(blank=True, max_length=254, null=True),
+                ),
                 (
                     "gender",
                     models.CharField(
