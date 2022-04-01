@@ -1,21 +1,18 @@
 import os
 from pathlib import Path
+from petstagram.utils import is_production, is_test
 
-from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-# SECRET_KEY = os.getenv("JWT_KEY", "sk")
-DEBUG = os.getenv("DEBUG", "False") == "True"
 
-# SECRET_KEY = "dsadasf2143235"
-# DEBUG = True
-ALLOWED_HOSTS = [
-    "localhost",
-    "127.0.0.1",
-    "petstagram-2022.herokuapp.com",
-]
-
-# ALLOWED_HOSTS = os.getenv("DB_HOST", "").split(" ")
+DEBUG = os.getenv("DEBUG", "True") == "True"
+APP_ENVIRONMENT = os.getenv("APP_ENVIRONMENT", "Development")
+SECRET_KEY = os.getenv(
+    "SECRET_KEY",
+    "django-insecure-t^jhlxn515i5sbhy3(e6l6c&$ex6(ct7j)5e@(nh=^1(db(&g7",
+)
+ALLOWED_HOSTS = os.getenv("DB_HOST", "127.0.0.1").split(" ")
+print(ALLOWED_HOSTS)
 # Application definition
 
 DJANGO_APPS = (
@@ -68,7 +65,6 @@ TEMPLATES = [
 WSGI_APPLICATION = "petstagram.wsgi.application"
 
 
-# Database
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -80,34 +76,24 @@ DATABASES = {
     }
 }
 
-# # Database
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "HOST": "ec2-176-34-211-0.eu-west-1.compute.amazonaws.com",
-#         "PORT": "5432",
-#         "NAME": "dck4k6lub4ekh9",
-#         "USER": "nrrgbjzmhbwzqe",
-#         "PASSWORD": "d8cadbfaebbc86e23644e645d0d49daf796e49cb6811618c63ac54f8d2361277",
-#     }
-# }
-
-
-# Password validation
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
-]
+AUTH_PASSWORD_VALIDATORS = []
+if is_production():
+    AUTH_PASSWORD_VALIDATORS.extend(
+        [
+            {
+                "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+            },
+            {
+                "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+            },
+            {
+                "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+            },
+            {
+                "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+            },
+        ]
+    )
 
 
 # Internationalization
@@ -133,27 +119,36 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
 MEDIA_ROOT = BASE_DIR / "media/"
-MEDIA_URL = "media/"
+MEDIA_URL = "/media/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-# LOGGING = {
-#     "version": 1,
-#     "handlers": {
-#         "console": {
-#             "level": "DEBUG",
-#             "filters": [],
-#             "class": "logging.StreamHandler",
-#         }
-#     },
-#     "loggers": {
-#         "django.db.backends": {
-#             "level": "DEBUG",
-#             "handlers": ["console"],
-#         }
-#     },
-# }
+
+LOGGING_LEVEL = "DEBUG"
+
+if is_production():
+    LOGGING_LEVEL = "INFO"
+elif is_test():
+    LOGGING_LEVEL = "CRITICAL"
+
+LOGGING = {
+    "version": 1,
+    "handlers": {
+        "console": {
+            # DEBUG, WARNING, INFO, ERROR, CRITICAL,
+            "level": LOGGING_LEVEL,
+            "filters": [],
+            "class": "logging.StreamHandler",
+        }
+    },
+    "loggers": {
+        "django.db.backends": {
+            "level": LOGGING_LEVEL,
+            "handlers": ["console"],
+        }
+    },
+}
 
 AUTH_USER_MODEL = "accounts.PetstagramUser"
