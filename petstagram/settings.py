@@ -5,14 +5,19 @@ from petstagram.utils import is_production, is_test
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DEBUG = os.getenv("DEBUG", "True") == "True"
-APP_ENVIRONMENT = os.getenv("APP_ENVIRONMENT", "Development")
-SECRET_KEY = os.getenv(
-    "SECRET_KEY",
-    "django-insecure-t^jhlxn515i5sbhy3(e6l6c&$ex6(ct7j)5e@(nh=^1(db(&g7",
-)
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1").split()
-# Application definition
+# DEBUG = os.getenv("DEBUG", "True") == "True"
+# APP_ENVIRONMENT = os.getenv("APP_ENVIRONMENT", "Development")
+# SECRET_KEY = os.getenv(
+#     "SECRET_KEY",
+#     "django-insecure-t^jhlxn515i5sbhy3(e6l6c&$ex6(ct7j)5e@(nh=^1(db(&g7",
+# )
+# ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1").split()
+
+DEBUG = os.getenv("DEBUG")
+APP_ENVIRONMENT = os.getenv("APP_ENVIRONMENT")
+SECRET_KEY = os.getenv("SECRET_KEY")
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split()
+
 
 DJANGO_APPS = (
     "django.contrib.admin",
@@ -64,14 +69,25 @@ TEMPLATES = [
 WSGI_APPLICATION = "petstagram.wsgi.application"
 
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "HOST": os.getenv("DB_HOST", "127.0.0.1"),
+#         "PORT": os.getenv("DB_PORT", "5432"),
+#         "NAME": os.getenv("DB_NAME", "petstragram_db"),
+#         "USER": os.getenv("DB_USER", "postgres"),
+#         "PASSWORD": os.getenv("DB_PASSWORD", "Newlife7"),
+#     }
+# }
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "HOST": os.getenv("DB_HOST", "127.0.0.1"),
-        "PORT": os.getenv("DB_PORT", "5432"),
-        "NAME": os.getenv("DB_NAME", "petstragram_db"),
-        "USER": os.getenv("DB_USER", "postgres"),
-        "PASSWORD": os.getenv("DB_PASSWORD", "Newlife7"),
+        "HOST": os.getenv("DB_HOST"),
+        "PORT": os.getenv("DB_PORT"),
+        "NAME": os.getenv("DB_NAME"),
+        "USER": os.getenv("DB_USER"),
+        "PASSWORD": os.getenv("DB_PASSWORD"),
     }
 }
 
